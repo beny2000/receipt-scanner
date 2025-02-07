@@ -2,7 +2,9 @@
 
 Receipt Scanner is a modern web-based application that allows users to upload receipt images and process them into structured data. The system uses OpenAI's vision models to extract itemized information from the receipts and presents it as a downloadable CSV table. It consists of a React frontend and a FastAPI backend.
 
-![App UI](./app.png)
+<div style="text-align: center;">
+    <img src="app.png" alt="Description" width="144" height="296">
+</div>
 
 ---
 
