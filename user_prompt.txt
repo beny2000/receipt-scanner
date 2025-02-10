@@ -1,0 +1,4 @@
+Output the itemized CSV of the following grocery receipt. 
+Categorize the items using the following categories only 
+Dariy, Meat, Vegetable, Fruit, Pasta, Sauce, Deli, Eggs, Dry Goods, Legumes, Bread. 
+If the item does not match any category the use Other

@@ -10,7 +10,7 @@ services:
     #command: sh -c "npm install -g serve && serve -s build"
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_API_URL=http://localhost:8000/api
       - REACT_APP_ENV=development
       - NODE_ENV=development
 
@@ -20,11 +20,15 @@ services:
       - 8000:8000
     volumes:
       - ./backend/app:/app/app
+      - ./system_prompt.txt:/app/system_prompt.txt
+      - ./user_prompt.txt:/app/user_prompt.txt
     env_file:
       - .env
     environment:
-      IS_TEST: false
+      IS_TEST: "false"
       LOG_LEVEL: DEBUG
-      MODEL_NAME: "gpt-4o-mini" # You must use a vision-enabled model
+      MODEL_NAME: "gpt-4o-mini" # Must use a vision-enabled model
       ALLOWED_ORIGINS: "*"
+      SYSTEM_PROMPT_FILE: /app/system_prompt.txt
+      USER_PROMPT_FILE: /app/user_prompt.txt
       
