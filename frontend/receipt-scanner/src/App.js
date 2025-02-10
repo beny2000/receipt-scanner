@@ -47,7 +47,7 @@ const App = () => {
   });
 
   const handleFileChange = (e) => {
-    if (e.target.files){
+    if (e.target.files && e.target.files[0] instanceof Blob){
       setFile(e.target.files[0]);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -74,20 +74,20 @@ const App = () => {
     setLoading(true);
     const formData = new FormData();
     formData.append('image', file);
-
+    console.log(process.env.REACT_APP_API_URL)
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/process-receipt`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setSuccess(true);
       setResponseText(response.data);
-      handleRemoveImage()
     } catch (error) {
       setSuccess(false);
       console.error(error.response)
       setResponseText(error.response ? error.response.data : 'An error occurred');
     } finally {
       setLoading(false);
+      handleRemoveImage()
     }
   };
 

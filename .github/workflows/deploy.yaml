@@ -32,23 +32,12 @@ jobs:
             -t ghcr.io/${{ github.repository }}/backend:latest \
             ./backend --push
 
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '18'
-
-      # - name: Install Frontend Dependencies and Build
-      #   working-directory: frontend/receipt-scanner
-      #   run: |
-      #     npm install
-      #     npm run build
-
-      # - name: Upload Frontend Build to MinIO Bucket
-      #   env:
-      #     MINIO_ENDPOINT:    ${{ secrets.MINIO_ENDPOINT }}
-      #     MINIO_ACCESS_KEY:  ${{ secrets.MINIO_ACCESS_KEY }}
-      #     MINIO_SECRET_KEY:  ${{ secrets.MINIO_SECRET_KEY }}
-      #     MINIO_BUCKET_NAME: ${{ secrets.MINIO_BUCKET_NAME }}
-      #   run: |
-      #     mc alias set myminio https://$MINIO_ENDPOINT $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
-      #     mc cp -r build/* myminio/$MINIO_BUCKET_NAME
+      - name: Build and Push Frontend Docker Image
+        run: |
+          GIT_COMMIT=$(git rev-parse --short HEAD)
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          docker buildx build \
+            --platform linux/arm64,linux/amd64 \
+            -t ghcr.io/${{ github.repository }}/frontend:$GIT_COMMIT \
+            -t ghcr.io/${{ github.repository }}/frontend:latest \
+            ./frontend --push
